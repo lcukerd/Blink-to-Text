@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Blink to Text</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+  <nav style="-webkit-app-region: drag">
+    <div class="nav-wrapper">
+      <a class="brand-logo center">Blink to Text</a>
+    </div>
+  </nav>
+  <div class="row teal lighten-4">
+    <div class="row white"></div>
+    <div class="col s6">
+      <div style="width:100%;height:100px">
+        <video id="cameraPreview"></video>
+      </div>
+    </div>
+    <div class="col s6">
+      <div class="red lighten-5 center">
+        <div class="row">
+          <div class="row white"></div>
+          <div class="col s1 no-padding-bottom"></div>
+          <div id="A" class="col s2 no-padding-bottom">
+            <h3 class="red accent-1">A</h3>
+          </div>
+          <div id="B" class="col s2  no-padding-bottom">
+            <h3 class="red lighten-4">B</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">C</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">D</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">E</h3>
+          </div>
+          <div class="col s1 no-padding-bottom"></div>
+        </div>
+        <div class="row">
+          <div class="col s2 no-padding-bottom"></div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">F</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">G</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">H</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">I</h3>
+          </div>
+          <div class="col s2 no-padding-bottom"></div>
+        </div>
+        <div class="row">
+          <div class="col s1 no-padding-bottom"></div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">J</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">K</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">L</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">M</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">N</h3>
+          </div>
+          <div class="col s1 no-padding-bottom"></div>
+        </div>
+        <div class="row">
+          <div class="col s3 no-padding-bottom"></div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">O</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">P</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">Q</h3>
+          </div>
+          <div class="col s3 no-padding-bottom"></div>
+        </div>
+        <div class="row">
+          <div class="col s2 no-padding-bottom"></div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">R</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">S</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">T</h3>
+          </div>
+          <div class="col s2 no-padding-bottom">
+            <h3 class="red lighten-4">U</h3>
+          </div>
+          <div class="col s2 no-padding-bottom"></div>
+        </div>
+        <div class="row">
+          <div class="col s1"></div>
+          <div class="col s2">
+            <h3 class="red lighten-4">V</h3>
+          </div>
+          <div class="col s2">
+            <h3 class="red lighten-4">W</h3>
+          </div>
+          <div class="col s2">
+            <h3 class="red lighten-4">X</h3>
+          </div>
+          <div class="col s2">
+            <h3 class="red lighten-4">Y</h3>
+          </div>
+          <div class="col s2">
+            <h3 class="red lighten-4">Z</h3>
+          </div>
+          <div class="col s1"></div>
+        </div>
+        <div class="container no-padding-bottom">
+          <p class="col s12 range-field no-padding-bottom">
+            <input type="range" id="speed" min="0" max="10" />
+            <label class="active" for="speed">Speed</label>
+          </p>
+        </div>
+        <div class="row">
+          <div class="col s6">
+            <a class="waves-effect waves-light btn-small">Start</a>
+          </div>
+          <div class="col s6">
+            <a class="waves-effect waves-light btn-small red accent-2">Stop</a>
+          </div>
+        </div>
+        <div class="row">
+        </div>
+      </div>
+    </div>
+    <div class="row no-padding-bottom">
+      <form class="col s12">
+        <div class="container">
+          <textarea id="textarea1" class="red lighten-5" readonly></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col s2 offset-s10">
+        <a class="waves-effect waves-light btn-small">Clear</a>
+      </div>
+    </div>
+  </div>
+  <script src="../js/mainWindow.js"></script>
+</body>
+
+</html>

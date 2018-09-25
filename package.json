@@ -1,0 +1,22 @@
+{
+  "name": "blink_to_text",
+  "version": "1.0.0",
+  "description": "Write text by blinks",
+  "main": "js/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcukerd/Blink-to-Text-minor-project-.git"
+  },
+  "author": "Lcukerd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lcukerd/Blink-to-Text-minor-project-/issues"
+  },
+  "homepage": "https://github.com/lcukerd/Blink-to-Text-minor-project-#readme",
+  "dependencies": {
+    "electron": "^3.0.0"
+  }
+}

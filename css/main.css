@@ -1,0 +1,12 @@
+.no-padding-bottom {
+  height: 50px !important
+}
+
+textarea {
+  height: 100px !important;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
