@@ -27,7 +27,10 @@ var ver_order = [
 start.addEventListener('click', begin);
 
 stop.addEventListener('click', function() {
-  clearInterval(toggler)
+  chosen = 0;
+  indexy = -1;
+  indexx = -1;
+  clearInterval(toggler);
 });
 
 clear.addEventListener('click', charchosen);
@@ -46,12 +49,10 @@ function chartoggler() {
     setTimeout("toggleHighlight(curchar)", 500)
     toggler = setTimeout(chartoggler, 1000)
   } else if (chosen == 1) {
-    curchar = ver_order[indexy][(++indexx) % ver_order.length];
-    console.log(curchar);
-    while (curchar == '-') {
-      curchar = ver_order[indexy][(++indexx) % ver_order.length];
+    do {
+      curchar = ver_order[indexy][(++indexx) % ver_order[0].length];
       console.log(curchar);
-    }
+    } while (curchar == '-');
     toggleHighlight(curchar)
     setTimeout("toggleHighlight(curchar)", 500)
     toggler = setTimeout(chartoggler, 1000)
