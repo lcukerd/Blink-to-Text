@@ -5,7 +5,7 @@ const {
 const start = document.querySelector('#start');
 const stop = document.querySelector('#stop');
 const clear = document.querySelector('#clear');
-const speedSlider =  document.querySelector('#speed');
+const speedSlider = document.querySelector('#speed');
 const textarea = document.querySelector('#textarea');
 
 let curchar;
@@ -13,9 +13,9 @@ let chosen = 0;
 let toggler;
 let indexy = -1,
   indexx = -1;
-var speed =  500;
+var speed = 500;
 
-var hor_order = ['A', 'F', 'J', 'O', 'R', 'V'];
+var hor_order = ['A', 'F', 'J', 'O', 'R', 'V', 'space'];
 var ver_order = [
   ['A', 'B', 'C', 'D', 'E'],
   ['F', 'G', 'H', 'I', '-'],
@@ -33,15 +33,19 @@ stop.addEventListener('click', function() {
   indexy = -1;
   indexx = -1;
   clearInterval(toggler);
+  toggler = null;
 });
 
-clear.addEventListener('click', charchosen);
+clear.addEventListener('click', function() {
+  // textarea.value = '';
+  charchosen();
+});
 
 ipcRenderer.on('char:chosen', charchosen);
 
 speedSlider.oninput = function() {
-  speed = parseInt (1000 * (1-this.value/100));
-  console.log(speed);
+  speed = parseInt(1000 * (1 - this.value / 100));
+  console.log('Speed changed to = ' + speed);
 }
 
 function charchosen() {
@@ -56,31 +60,39 @@ function chartoggler() {
     curchar = hor_order[indexy];
     toggleHighlight(curchar)
     setTimeout("toggleHighlight(curchar)", speed)
-    toggler = setTimeout(chartoggler, 2*speed)
+    toggler = setTimeout(chartoggler, 2 * speed)
   } else if (chosen == 1) {
-    do {
-      indexx = (++indexx) % ver_order[0].length;
-      curchar = ver_order[indexy][indexx];
-      console.log(curchar);
-    } while (curchar == '-');
-    toggleHighlight(curchar)
-    setTimeout("toggleHighlight(curchar)", speed)
-    toggler = setTimeout(chartoggler, 2*speed)
+    if (curchar == 'space') {
+      chosen = 2;
+      toggler = setTimeout(chartoggler, speed);
+    } else {
+      do {
+        indexx = (++indexx) % ver_order[0].length;
+        curchar = ver_order[indexy][indexx];
+        console.log(curchar);
+      } while (curchar == '-');
+      toggleHighlight(curchar);
+      setTimeout("toggleHighlight(curchar)", speed);
+      toggler = setTimeout(chartoggler, 2 * speed);
+    }
   } else {
     indexx = -1;
     indexy = -1;
     writechar(curchar);
     charchosen()
-    toggler = setTimeout(chartoggler, 2*speed)
+    toggler = setTimeout(chartoggler, 2 * speed)
   }
 }
 
 function writechar(curchar) {
+  if (curchar == 'space')
+    curchar = ' ';
   textarea.value += curchar;
 }
 
 function begin() {
-  chartoggler()
+  if (toggler == null)
+    chartoggler()
 }
 
 function toggleHighlight(id) {

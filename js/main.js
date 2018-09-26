@@ -15,8 +15,8 @@ let mainWindow;
 
 app.on('ready', function(){
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 870,
+    width: 1000,
+    height: 940,
     frame: false
   });
 
