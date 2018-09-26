@@ -5,6 +5,7 @@ const {
 const start = document.querySelector('#start');
 const stop = document.querySelector('#stop');
 const clear = document.querySelector('#clear');
+const speedSlider =  document.querySelector('#speed');
 const textarea = document.querySelector('#textarea');
 
 let curchar;
@@ -12,6 +13,7 @@ let chosen = 0;
 let toggler;
 let indexy = -1,
   indexx = -1;
+var speed =  500;
 
 var hor_order = ['A', 'F', 'J', 'O', 'R', 'V'];
 var ver_order = [
@@ -37,31 +39,39 @@ clear.addEventListener('click', charchosen);
 
 ipcRenderer.on('char:chosen', charchosen);
 
+speedSlider.oninput = function() {
+  speed = parseInt (1000 * (1-this.value/100));
+  console.log(speed);
+}
+
 function charchosen() {
   chosen += 1;
   chosen = chosen % 3;
 }
 
 function chartoggler() {
+  console.log('indexx = ' + indexx + ' indexy = ' + indexy);
   if (chosen == 0) {
-    curchar = hor_order[(++indexy) % hor_order.length];
+    indexy = ++indexy % hor_order.length;
+    curchar = hor_order[indexy];
     toggleHighlight(curchar)
-    setTimeout("toggleHighlight(curchar)", 500)
-    toggler = setTimeout(chartoggler, 1000)
+    setTimeout("toggleHighlight(curchar)", speed)
+    toggler = setTimeout(chartoggler, 2*speed)
   } else if (chosen == 1) {
     do {
-      curchar = ver_order[indexy][(++indexx) % ver_order[0].length];
+      indexx = (++indexx) % ver_order[0].length;
+      curchar = ver_order[indexy][indexx];
       console.log(curchar);
     } while (curchar == '-');
     toggleHighlight(curchar)
-    setTimeout("toggleHighlight(curchar)", 500)
-    toggler = setTimeout(chartoggler, 1000)
+    setTimeout("toggleHighlight(curchar)", speed)
+    toggler = setTimeout(chartoggler, 2*speed)
   } else {
     indexx = -1;
     indexy = -1;
     writechar(curchar);
     charchosen()
-    toggler = setTimeout(chartoggler, 1000)
+    toggler = setTimeout(chartoggler, 2*speed)
   }
 }
 
