@@ -19,11 +19,11 @@ Many companies are developing technologies that are controlled by eye movement. 
 
 <h3>Research Methodology</h3>
 Step 1: Image capture
-As the system works in, either online or offline stages, the capture stage have two phases. In offline phase, the video is captured and recorded, and then whole video is extracted into frames. On the other hand, the online phase is working by capture an instant image and decide directly if it is open or closed.<br>
-
+As the system works in, either online or offline stages, the capture stage have two phases. In offline phase, the video is captured and recorded, and then whole video is extracted into frames. On the other hand, the online phase is working by capture an instant image and decide directly if it is open or closed.
+<br><br>
 Step 2: Face Detection
 Face detection is an indispensable step and it is the actual first step of the system framework. It determines if the later stages are going to run or not. In the proposed system Viola Jones algorithm is applied for face detection and tracking. The Viola Jones algorithm is more efficient for tracking than the AdaBoost Algorithm when working with multiple image frames. Viola Jones can detect more than face if the image contains multi faces (it can detect the correct face with the existing of other people or objects). It can track different types of facial views, not only the frontal view like AdaBoost that needs to a Lucas–Kanade–Tomasi (LKT) based method to support non-frontal faces. Viola Jones is characterized by being extremely fast and achieving high detection rates. The basic idea of this algorithm is to slide a window across the image and evaluate a face model at every location, this window or bounding box serves to restrict the region of the image that is searched for the eyes.
-<br>
+<br><br>
 Step 3: Facial Landmark Detection:
 Detecting facial landmarks is a subset of the shape prediction problem. Given an input image, a shape predictor attempts to localize key points of interest along the shape.
 Our goal is detect important facial structures on the face using shape prediction methods.
@@ -37,13 +37,13 @@ There are a variety of facial landmark detectors, but all methods essentially tr
 <li>Nose</li>
 <li>Jaw</li>
 </ul>
-<br>
+<br><br>
 Step 4:Iris Detection
 We make the following assumptions for detecting and tracking irises:
 • The image is a frontal view of the face, i.e. the two eyes are visible and have approximately the same distance from the camera.
 • The iris in each eye is at least partially visible. • The brightness of the iris is lower than that of the visible part of the sclera.
 • An average ratio between iris size and distance between eyes is known. • The line between the two centres of the irises must not deviate by more than 30° from the xaxis of the image.
 • The subject may not be closer than 0.5 m to the camera and not further away than 5 m.
-<br>
+<br><br>
 Step 5: Blink Detection
 The algorithm works with both videos or with static images. In its most basic form, the algorithm begins by tracking the face and eye regions of the subject at hand and then applies image differencing, binary thresholding, and morphological operators on the eye regions to determine whether the eyes are open, and if they are open, it will grab the templates of the open eyes. Once the algorithm has the templates, for every subsequent frame it performs a template matching on the eye regions of that frame for both eyes. Since template matching metric is normalized squared­ difference, the smallest values in the template matching matrices are used as the similarity scores. If the similarity score exceeds a given threshold (in this case, the higher the similarity score, the greater the difference) for one of the 2 eyes, that frame will be classified as “blink”; if neither similarity score exceeded the threshold (or no face was found in the frame), the frame will be classified as “non­blink”.

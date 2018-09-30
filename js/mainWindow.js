@@ -125,6 +125,7 @@ function checkBlink() {
       if (res == true && reset_blink == true) {
         reset_blink = false;
         charchosen();
+        console.log(res);
       }
       else {
         reset_blink = true;

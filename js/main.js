@@ -8,7 +8,8 @@ const {
   ipcMain
 } = electron;
 
-process.env.NODE_ENV = 'development';
+// Making this false will run packaged python and not py file saved in python_backend
+var runpy = false;
 
 let mainWindow;
 
@@ -18,13 +19,11 @@ app.on('ready', function(){
     height: 940,
     frame: false
   });
-
   mainWindow.loadURL(url.format({
     pathname : path.join(__dirname,'../html/mainWindow.html'),
     protocol : 'file',
     slashes : true
   }));
-
   mainWindow.on('closed', function(){
     app.quit();
   });
@@ -59,8 +58,9 @@ const PY_FOLDER = 'python_backend'
 const PY_MODULE = 'detect_blink' // without .py suffix
 
 const guessPackaged = () => {
-  const fullPath = path.join(__dirname, PY_DIST_FOLDER)
-  return require('fs').existsSync(fullPath)
+  const fullPath = path.join(__dirname, '../' + PY_DIST_FOLDER)
+  console.log(fullPath);
+  return require('fs').existsSync(fullPath) && runpy;
 }
 
 const getScriptPath = () => {
