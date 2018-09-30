@@ -33,16 +33,17 @@ app.on('ready', function(){
 let pyProc = null
 let pyPort = null
 
-const selectPort = () => {
-  pyPort = 4242
-  return pyPort
-}
-
 const createPyProc = () => {
-  let port = '' + selectPort()
-  let script = '../python_backend/api.py'
-  pyProc = require('child_process').spawn('python', [script, port])
+  let script = getScriptPath()
+  console.log(script);
+  if (guessPackaged()) {
+    pyProc = require('child_process').execFile(script)
+  } else {
+    pyProc = require('child_process').spawn('python3', [script])
+  }
+
   if (pyProc != null) {
+    //console.log(pyProc)
     console.log('child process success')
   }
 }
@@ -51,6 +52,25 @@ const exitPyProc = () => {
   pyProc.kill()
   pyProc = null
   pyPort = null
+}
+
+const PY_DIST_FOLDER = 'pycalcdist'
+const PY_FOLDER = 'python_backend'
+const PY_MODULE = 'detect_blink' // without .py suffix
+
+const guessPackaged = () => {
+  const fullPath = path.join(__dirname, PY_DIST_FOLDER)
+  return require('fs').existsSync(fullPath)
+}
+
+const getScriptPath = () => {
+  if (!guessPackaged()) {
+    return path.join(__dirname,'../' +  PY_FOLDER, PY_MODULE + '.py')
+  }
+  if (process.platform === 'win32') {
+    return path.join(__dirname, '../' + PY_DIST_FOLDER, PY_MODULE, PY_MODULE + '.exe')
+  }
+  return path.join(__dirname, '../' + PY_DIST_FOLDER, PY_MODULE, PY_MODULE)
 }
 
 app.on('ready', createPyProc)

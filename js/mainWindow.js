@@ -15,6 +15,8 @@ let blink_detector;
 let indexy = -1,
   indexx = -1;
 var speed = 500;
+var blink_check_speed = 1;
+var reset_blink = true;
 
 var hor_order = ['A', 'F', 'J', 'O', 'R', 'V', 'space'];
 var ver_order = [
@@ -39,8 +41,7 @@ stop.addEventListener('click', function() {
 });
 
 clear.addEventListener('click', function() {
-  // textarea.value = '';
-  charchosen();
+  textarea.value = '';
 });
 
 ipcRenderer.on('char:chosen', charchosen);
@@ -70,6 +71,8 @@ function chartoggler() {
     } else {
       do {
         indexx = (++indexx) % ver_order[0].length;
+        if (indexy == -1)
+          indexy = 0;
         curchar = ver_order[indexy][indexx];
         console.log(curchar);
       } while (curchar == '-');
@@ -94,8 +97,8 @@ function writechar(curchar) {
 
 function begin() {
   if (toggler == null) {
-    // chartoggler()
-    blink_detector = setTimeout(checkBlink, 10);
+    chartoggler()
+    blink_detector = setTimeout(checkBlink, blink_check_speed);
   }
 }
 
@@ -109,7 +112,6 @@ function toggleHighlight(id) {
   }
 }
 
-
 // Zerorpc Stuff
 const zerorpc = require("zerorpc")
 let client = new zerorpc.Client()
@@ -120,8 +122,14 @@ function checkBlink() {
     if (error) {
       console.error(error);
     } else {
-      console.log(res);
+      if (res == true && reset_blink == true) {
+        reset_blink = false;
+        charchosen();
+      }
+      else {
+        reset_blink = true;
+      }
     }
-    blink_detector = setTimeout(checkBlink, 10);
+    blink_detector = setTimeout(checkBlink, blink_check_speed);
   });
 }
