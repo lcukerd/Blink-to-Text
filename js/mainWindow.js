@@ -11,6 +11,7 @@ const textarea = document.querySelector('#textarea');
 let curchar;
 let chosen = 0;
 let toggler;
+let blink_detector;
 let indexy = -1,
   indexx = -1;
 var speed = 500;
@@ -33,22 +34,12 @@ stop.addEventListener('click', function() {
   indexy = -1;
   indexx = -1;
   clearInterval(toggler);
+  clearInterval(blink_detector);
   toggler = null;
 });
 
 clear.addEventListener('click', function() {
   // textarea.value = '';
-  console.log('Clear Clicked');
-  const zerorpc = require("zerorpc")
-  let client = new zerorpc.Client()
-  client.connect("tcp://127.0.0.1:4242")
-  client.invoke("calc", '1+1', (error, res) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(res);
-    }
-  });
   charchosen();
 });
 
@@ -102,8 +93,10 @@ function writechar(curchar) {
 }
 
 function begin() {
-  if (toggler == null)
-    chartoggler()
+  if (toggler == null) {
+    // chartoggler()
+    blink_detector = setTimeout(checkBlink, 10);
+  }
 }
 
 function toggleHighlight(id) {
@@ -118,3 +111,17 @@ function toggleHighlight(id) {
 
 
 // Zerorpc Stuff
+const zerorpc = require("zerorpc")
+let client = new zerorpc.Client()
+client.connect("tcp://127.0.0.1:4242")
+
+function checkBlink() {
+  client.invoke("blink", (error, res) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(res);
+    }
+    blink_detector = setTimeout(checkBlink, 10);
+  });
+}
