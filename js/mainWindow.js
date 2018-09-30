@@ -38,6 +38,17 @@ stop.addEventListener('click', function() {
 
 clear.addEventListener('click', function() {
   // textarea.value = '';
+  console.log('Clear Clicked');
+  const zerorpc = require("zerorpc")
+  let client = new zerorpc.Client()
+  client.connect("tcp://127.0.0.1:4242")
+  client.invoke("calc", '1+1', (error, res) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(res);
+    }
+  });
   charchosen();
 });
 
@@ -104,3 +115,6 @@ function toggleHighlight(id) {
     char.className = 'red accent-1'
   }
 }
+
+
+// Zerorpc Stuff
