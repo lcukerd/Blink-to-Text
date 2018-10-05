@@ -15,7 +15,7 @@ let blink_detector;
 let indexy = -1,
   indexx = -1;
 var speed = 500;
-var blink_check_speed = 10;
+var blink_check_speed = 30;
 var reset_blink = true;
 
 var hor_order = ['A', 'F', 'J', 'O', 'R', 'V', 'space'];
