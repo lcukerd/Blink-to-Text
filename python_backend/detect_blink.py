@@ -6,7 +6,6 @@ from imutils.video import FileVideoStream
 from imutils.video import VideoStream
 from imutils import face_utils
 import numpy as np
-import argparse
 import imutils
 import time
 import dlib
@@ -56,12 +55,6 @@ def start_detector():
     global blinked
     print ('Detector started')
     # construct the argument parse and parse the arguments
-    ap = argparse.ArgumentParser()
-    # ap.add_argument("-p", "--shape-predictor", required=True,
-    # 	help="path to facial landmark predictor")
-    ap.add_argument("-v", "--video", type=str, default="",
-    	help="path to input video file")
-    args = vars(ap.parse_args())
     # define two constants, one for the eye aspect ratio to indicate
     # blink and then a second constant for the number of consecutive
     # frames the eye must be below the threshold
@@ -94,6 +87,7 @@ def start_detector():
 
     # loop over frames from the video stream
     while True:
+    	time.sleep(0.030)
     	# if this is a file video stream, then we need to check if
     	# there any more frames left in the buffer to process
     	if fileStream and not vs.more():
@@ -138,6 +132,8 @@ def start_detector():
     		# threshold, and if so, increment the blink frame counter
     		if ear < EYE_AR_THRESH:
     			COUNTER += 1
+    			blinked = False
+    			print('Not Blinked')
 
     		# otherwise, the eye aspect ratio is not below the blink
     		# threshold
@@ -147,7 +143,10 @@ def start_detector():
     			if COUNTER >= EYE_AR_CONSEC_FRAMES:
     				TOTAL += 1
     				blinked = True
-    			else:blinked = False
+    				print('Blinked')
+    			else:
+    				blinked = False
+    				print('Not Blinked')
 
 
     			# reset the eye frame counter
