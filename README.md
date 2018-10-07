@@ -1,4 +1,4 @@
-# Blink-to-Text-minor-project-
+# Blink to Text (Minor project)
 <h3>Abstract</h3
 <p>Paralysis is the loss of voluntary muscle control. Over 9.5 million suffer from paralysis in India[1]. Many paralysed people cannot move a single part of their body Even though these people are cognitively aware, they have no means of communication. They have lost their ability to talk, type, etc. These victims have their thoughts and ideas trapped inside of them. Generally, people with paralysis have control over their eye movement. Therefore, the purpose of this project is to build a real time interactive system that allows paralysed people to easily express themselves, via eye blinks.</p>
 
