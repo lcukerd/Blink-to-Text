@@ -5,7 +5,7 @@
 <h3>Introduction</h3>
 
 <h4>The Problem</h4>
-<p>Paralyzed people lack the ability to control muscle function in one or more muscle groups. The condition can be caused by stroke, ALS, multiple sclerosis, and many other diseases. Locked-in Syndrome (LIS) is a form of paralysis where patients have lost control of nearly all voluntary muscles. These people are unable to control any part of their body, besides eye movement and blinking. Due to their condition, these people are unable to talk, text, and communicate in general. Even though people that have LIS are cognitively aware, their thoughts and ideas are locked inside of them. These people depend on eye blinks to communicate. They rely on nurses and caretakers to interpret and decode their blinking. Whenever LIS patients do not have a person to read their eye blinks available, they have no means of self expression.</p>
+<p>Paralyzed people lack the ability to control muscle function in one or more muscle groups. The condition can be caused by stroke, ALS, multiple sclerosis, and many other diseases. Locked-in Syndrome (LIS) is a form of paralysis where patients have lost control of nearly all voluntary muscles. Due to their condition, these people are unable to talk, text, and communicate in general. Even though people that have LIS are cognitively aware, their thoughts and ideas are locked inside of them. These people depend on eye blinks to communicate. They rely on nurses and caretakers to interpret and decode their blinking. Whenever LIS patients do not have a person to read their eye blinks available, they have no means of self expression.</p>
 
 <h4>The Solution</h4>
 <p>This project offers a form of independence to paralyzed people. The software platform converts eye blinks to text. Every feature of the software can be controlled by eye movement. Thus, the software can be independently operated by paralyzed people. Using the software, patients can record messages, recite those messages aloud, and send the messages to others. The software can be run on any low end computer, from a Raspberry Pi to an IBM Thinkpad. The software uses computer vision and Haar cascades to detect eye blinking and convert the motion into text. The program uses language modelling to predict the next words that the user might blink. The software can be easily customized for each patient as well.
@@ -65,6 +65,7 @@ Many companies are developing technologies that are controlled by eye movement. 
   </ul>
   
  <h3> Screenshots</h3>
+ <img src="https://image.ibb.co/kz6aG9/Screenshot_from_2018_10_10_21_28_56.png" alt="Screenshot1" width="640" height="360">
  <h3> References </h3>
 [1] Statistics about Paralysis. [Online]. Available: https://www.eyecomtec.com/3016-Statistics-about-Paralysis<br>
 [2] A Rosebrock. (2017, Apr. 3). Facial landmarks with dlib, OpenCV, and Python [Online]. Available: https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/<br>
