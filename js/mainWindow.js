@@ -1,4 +1,6 @@
 const electron = require('electron');
+const path = require('path');
+const autocorrect = require(path.join(__dirname,'../js/autocorrect'))({words: ['Hi', 'Hello', 'Yup']});
 const {
   ipcRenderer
 } = electron;
@@ -90,13 +92,28 @@ function chartoggler() {
 }
 
 function writechar(curchar) {
-  if (curchar == 'space')
+  if (curchar == 'space') {
     curchar = ' ';
+    autocorrectText()
+  }
   textarea.value += curchar;
+}
+
+function spaceclicked(){
+  writechar('space');
+}
+
+function autocorrectText() {
+  words = textarea.value.split(" ");
+  words[words.length - 1] = autocorrect(words[words.length - 1]);
+  textarea.value = words.join(" ");
 }
 
 function begin() {
   if (toggler == null) {
+    chosen = 0;
+    indexy = -1;
+    indexx = -1;
     chartoggler()
     blink_detector = setTimeout(checkBlink, blink_check_speed);
   }
@@ -126,8 +143,7 @@ function checkBlink() {
         reset_blink = false;
         charchosen();
         console.log(res);
-      }
-      else {
+      } else {
         reset_blink = true;
       }
     }

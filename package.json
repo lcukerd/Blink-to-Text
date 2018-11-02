@@ -21,6 +21,9 @@
   "homepage": "https://github.com/lcukerd/Blink-to-Text-minor-project-#readme",
   "dependencies": {
     "electron": "^1.4.1",
+    "fs": "0.0.1-security",
+    "leven": "^2.1.0",
+    "word-list": "^2.0.0",
     "zerorpc": "fyears/zerorpc-node"
   },
   "devDependencies": {
