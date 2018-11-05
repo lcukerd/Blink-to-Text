@@ -1,6 +1,8 @@
 const electron = require('electron');
 const path = require('path');
-const autocorrect = require(path.join(__dirname,'../js/autocorrect'))({words: ['Hi', 'Hello', 'Yup']});
+const autocorrect = require(path.join(__dirname, '../js/autocorrect'))({
+  words: ['hi', 'hello', 'yup', 'no', 'yes', 'maybe', 'today', 'tomorrow', 'yesterday', 'tonight']
+});
 const {
   ipcRenderer
 } = electron;
@@ -11,14 +13,16 @@ const speedSlider = document.querySelector('#speed');
 const textarea = document.querySelector('#textarea');
 
 let curchar;
+let chosenchar;
 let chosen = 0;
 let toggler;
 let blink_detector;
 let indexy = -1,
   indexx = -1;
+let tempindexy = -1;
 var speed = 500;
-var blink_check_speed = 30;
-var reset_blink = true;
+var blink_check_speed = 50;
+var reset_blink = true,reset_start = true;
 
 var hor_order = ['A', 'F', 'J', 'O', 'R', 'V', 'space'];
 var ver_order = [
@@ -56,17 +60,22 @@ speedSlider.oninput = function() {
 function charchosen() {
   chosen += 1;
   chosen = chosen % 3;
+  // chartoggler(false);
 }
 
-function chartoggler() {
-  console.log('indexx = ' + indexx + ' indexy = ' + indexy);
+function chartoggler(withtimer = true) {
+  reset_start = true;
   if (chosen == 0) {
     indexy = ++indexy % hor_order.length;
     curchar = hor_order[indexy];
-    toggleHighlight(curchar)
-    setTimeout("toggleHighlight(curchar)", speed)
-    toggler = setTimeout(chartoggler, 2 * speed)
+    if (withtimer == true) {
+      toggleHighlight(curchar)
+      setTimeout(toggleHighlight.bind(null,curchar), speed)
+      toggler = setTimeout(chartoggler, 2 * speed)
+    }
   } else if (chosen == 1) {
+    indexy = tempindexy;
+    curchar = chosenchar;
     if (curchar == 'space') {
       chosen = 2;
       toggler = setTimeout(chartoggler, speed);
@@ -76,18 +85,21 @@ function chartoggler() {
         if (indexy == -1)
           indexy = 0;
         curchar = ver_order[indexy][indexx];
-        console.log(curchar);
       } while (curchar == '-');
-      toggleHighlight(curchar);
-      setTimeout("toggleHighlight(curchar)", speed);
-      toggler = setTimeout(chartoggler, 2 * speed);
+      if (withtimer == true) {
+        toggleHighlight(curchar);
+        setTimeout(toggleHighlight.bind(null,curchar), speed);
+        toggler = setTimeout(chartoggler, 2 * speed);
+      }
     }
   } else {
     indexx = -1;
     indexy = -1;
-    writechar(curchar);
+    writechar(chosenchar);
     charchosen()
-    toggler = setTimeout(chartoggler, 2 * speed)
+    if (withtimer == true) {
+      toggler = setTimeout(chartoggler, 2 * speed)
+    }
   }
 }
 
@@ -96,16 +108,17 @@ function writechar(curchar) {
     curchar = ' ';
     autocorrectText()
   }
-  textarea.value += curchar;
+  textarea.value += curchar.toLowerCase();
 }
 
-function spaceclicked(){
+function spaceclicked() {
   writechar('space');
 }
 
 function autocorrectText() {
   words = textarea.value.split(" ");
-  words[words.length - 1] = autocorrect(words[words.length - 1]);
+  words[words.length - 1] = autocorrect(words[words.length - 1].toLowerCase());
+  words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1)
   textarea.value = words.join(" ");
 }
 
@@ -121,7 +134,6 @@ function begin() {
 
 function toggleHighlight(id) {
   var char = document.querySelector('#' + id + ' > h3');
-  console.log(char.className);
   if (char.className == 'red accent-1') {
     char.className = 'red lighten-4';
   } else {
@@ -139,7 +151,14 @@ function checkBlink() {
     if (error) {
       console.error(error);
     } else {
-      if (res == true && reset_blink == true) {
+      if (res[1] == true && reset_start == true) {
+        console.log(curchar);
+        chosenchar = curchar;
+        tempindexy = indexy;
+      }
+
+      if (res[0] == true && reset_blink == true) {
+        reset_start = false;
         reset_blink = false;
         charchosen();
         console.log(res);
