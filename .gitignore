@@ -2,3 +2,4 @@
 pycalcdist
 release-builds
 python_backend/__pycache__
+python_backend/shape_predictor_68_face_landmarks.dat
